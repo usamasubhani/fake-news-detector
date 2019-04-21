@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+</br>
+</br>
+<div class="container">
+    <form class="form-group" action="http://localhost:5000/features" method="POST">
+        <label for="body1">Head</label>
+            <textarea class="form-control bg-dark text-white" rows=10 id="body1" placeholder="Enter Headline" name="head" required></textarea>
+        </br>
+            <label for="body2">Body</label>
+            <textarea class="form-control bg-dark text-white" rows=10 id="body2" placeholder="Enter Body" name="body" required></textarea>
+        </br>
+            <div class="float-right">
+                <button type="submit" class="btn btn-primary">Predict</button>
+            </div>
+    </form>
+    
+</div>
+
+{% endblock %}

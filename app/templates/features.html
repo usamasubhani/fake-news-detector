@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+</br>
+</br>
+<div class="container-fluid">
+
+	
+
+	
+
+	<div class="row">
+	<div class="col-sm-3"><h3> Head TF-IDF</h3></br>{{ result[1].sort_values(by=['Weight'], ascending=False).to_html(index=False, border=0, justify='center', classes="table table-dark t") | safe}}</div>
+	
+	
+
+	<div class="col-sm-3 "><h3> Body TF-IDF</h3></br>{{ result[2].sort_values(by=['Weight'], ascending=False).to_html(index=False,border=0, justify='center', classes="table table-dark t") | safe }}</div>
+	
+	<div class="col-sm-3 "><h3> Class Probabilities</h3></br>{{ result[3].to_html(index=False,border=0, justify='center', classes="table table-dark t") | safe }}</div>
+
+	<div class="col-sm-3">
+		<h3>Result</h3>
+	</br>
+	</br>
+		
+				<div class="card bg-dark">
+						<div class="card-header">Stance</div>
+						<div id='stance' class="card-body"><div class="spinner-border text-success"></div>
+				</div>
+				
+	</div>
+</div>
+	
+	
+
+
+
+
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            
+			$.ajax({
+				url: "/ajax/stance", 
+				success: function(){
+						$("#stance").html("<h3>{{ result[0].title() }}</h3>");
+				}
+			});
+		</script>
+{% endblock %}
