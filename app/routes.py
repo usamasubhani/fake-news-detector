@@ -11,14 +11,7 @@ import time
 
 
 loaded = False
-#def load_model():
- #   global model
-  #  model = load_model('Model.h5')
-    # this is key : save the graph after loading the model
-   # global graph
-    #graph = tf.get_default_graph()
-# Dataset directories
-#load_model()
+
 
 
 @app.route('/')
@@ -36,16 +29,16 @@ def Form():
 def Features():
     input = request.form
     h_bow = bow_vectorizer.transform([input['head']]).toarray()
-    h_tf = tfreq_vectorizer.transform(h_bow).toarray()[0].reshape(1, -1)
+    h_tf = tfreq_vectorizer.transform(h_bow)
     h_tfidf = tfidf_vectorizer.transform([input['head']])
 
 
     b_bow = bow_vectorizer.transform([input['body']]).toarray()
-    b_tf = tfreq_vectorizer.transform(b_bow).toarray()[0].reshape(1, -1)
+    b_tf = tfreq_vectorizer.transform(b_bow)
     b_tfidf = tfidf_vectorizer.transform([input['body']])
 
     tfidf_cos = cosine_similarity(h_tfidf.toarray().reshape(1, -1), b_tfidf.toarray().reshape(1, -1))[0].reshape(1,1)
-    feat_vec = np.squeeze(np.c_[h_tf, b_tf, tfidf_cos])
+    feat_vec = np.squeeze(np.c_[h_tf.toarray()[0].reshape(1, -1), b_tf.toarray()[0].reshape(1, -1), tfidf_cos])
     with graph.as_default():
         stance = model.predict_classes(np.array([feat_vec]))
         probabilities = model.predict(np.array([feat_vec]))
@@ -71,7 +64,14 @@ def Features():
     probabilities = pd.DataFrame({'Stance': s, 'Probability': p})
     np.set_printoptions(precision=4)
 
-    return render_template('features.html', result = [label_ref_rev[ stance[0] ], h_weights_df, b_weights_df, probabilities ])
+    return render_template('features.html', result = [label_ref_rev[ stance[0] ], h_weights_df, b_weights_df, probabilities, tfidf_cos])
+
+
+@app.route('/api', methods=['POST'])
+def api():
+    import json
+    request_body = json.loads(request.data)
+    return request.data
 
 @app.route('/ajax/index')
 def ajax_index():

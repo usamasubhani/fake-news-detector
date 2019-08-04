@@ -13,7 +13,6 @@ def write_preds(preds, fname):
 
 
 
-
 class Data:
 
     def __init__(self, file_instances, file_bodies):
@@ -64,10 +63,10 @@ def Train(train, test, lim_unigram):
     Args:
         train: Data object, train set
         test: Data object, test set
-        lim_unigram: int, number of most frequent words to consider
+        lim_unigram: int
     Returns:
         train_set: list, of numpy arrays
-        train_stances: list, of ints
+        train_stances: list of ints
         bow_vectorizer: sklearn CountVectorizer
         tfreq_vectorizer: sklearn TfidfTransformer(use_idf=False)
         tfidf_vectorizer: sklearn TfidfVectorizer()

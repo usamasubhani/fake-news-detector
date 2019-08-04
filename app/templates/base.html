@@ -4,11 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='jquery-3.4.0.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.css') }}">
     <style>
-        .t {  
-            max-height: 700px !important;
+        .scroll {  
+            height: 300px !important;
             overflow: scroll;
-}​
+            scrollbar-width: none;
+        }​
     </style>
         {% if title %}
         <title>{{ title }}</title>
@@ -16,7 +19,7 @@
         <title>Fake News Detection</title>
         {% endif %}
     </head>
-    <body class="bg-secondary text-white">
+    <body class="bg-light text-dark">
 	<nav class="navbar navbar-expand-sm bg-dark">
 
   		<ul class="navbar-nav">

@@ -7,11 +7,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <form class="form-group" action="http://localhost:5000/features" method="POST">
-                    
-                        <textarea class="form-control bg-dark text-white" rows=5 id="body1" placeholder="Enter Headline Here to check Stance" name="head" required></textarea>
+
+                        <textarea class="form-control bg-white text-dark" rows=5 id="body1" placeholder="Enter Headline Here to check Stance" name="head" required></textarea>
                     </br>
-                
-                        <textarea class="form-control bg-dark text-white" rows=10 id="body2" placeholder="Enter Body Text" name="body" required></textarea>
+
+                        <textarea class="form-control bg-white text-dark" rows=10 id="body2" placeholder="Enter Body Text" name="body" required></textarea>
                     </br>
                         <div class="float-center">
                             <button type="submit" class="btn btn-primary">Check Stance</button>
@@ -24,22 +24,16 @@
         <div id="model_status">
                 <div class="spinner-border text-success"></div><p>Loading Model</p>
         </div>
-    </br></br></br></br>
-        <h3>How it Works: </h3><p>This tool can be used to detect clickbait using stance detection.</br>
-            It extracts <strong>Term Frequencies</strong> from user's input, calculates <strong>Inverse Documunt Frequencies</strong> of
-            the headline and body. </br>Term Frequencies and <strong> Cosine Similarity</strong> betweeen TF-IDF is concatenated in a vector which</br> is fed to a trained 
-            <strong>Neural Network</strong> which outputs the result.
-        </p>
-        
+
         </div>
-        
+
 
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            $(function () { 
-                $("#model_status").load("/ajax/index"); 
+            $(function () {
+                $("#model_status").load("/ajax/index");
             });
 </script>
 {% endblock %}

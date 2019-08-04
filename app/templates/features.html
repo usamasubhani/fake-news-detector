@@ -1,50 +1,112 @@
 {% extends "base.html" %}
 
 {% block content %}
-</br>
-</br>
+
+
 <div class="container-fluid">
 
-	
+	<div class="row  m-3" style="height: 350px">
+		<div  class="col-sm-4 t bg-light text-dark" style="border:1px solid black;">
+			<h3> Headline TF-IDF</h3><div id="h_load" class="spinner-border text-success"></div>
+			<div class="scroll" id="h_tfidf" style="display:none">{{ result[1].sort_values(by=['Weight'], ascending=False).to_html(index=False, border=0, justify='center', classes='table') | safe}}</div>
+		</div>
 
-	
 
-	<div class="row">
-	<div class="col-sm-3"><h3> Head TF-IDF</h3></br>{{ result[1].sort_values(by=['Weight'], ascending=False).to_html(index=False, border=0, justify='center', classes="table table-dark t") | safe}}</div>
-	
-	
-
-	<div class="col-sm-3 "><h3> Body TF-IDF</h3></br>{{ result[2].sort_values(by=['Weight'], ascending=False).to_html(index=False,border=0, justify='center', classes="table table-dark t") | safe }}</div>
-	
-	<div class="col-sm-3 "><h3> Class Probabilities</h3></br>{{ result[3].to_html(index=False,border=0, justify='center', classes="table table-dark t") | safe }}</div>
-
-	<div class="col-sm-3">
-		<h3>Result</h3>
-	</br>
-	</br>
-		
-				<div class="card bg-dark">
-						<div class="card-header">Stance</div>
-						<div id='stance' class="card-body"><div class="spinner-border text-success"></div>
+		<div id="cosine" class="col-sm-3 ml-4" style="border:1px solid black;">
+				<div class="card m-3 mt-5">
+						<div class="card-header">Cosine Similarity</div>
+						<div class="card-body"><div id="cos_load" class="spinner-border text-success" style="display:none"></div>
+							<div id="cos" style="display:none">{{ result[4][0][0] }}</div>
+						</div>
 				</div>
-				
+		</div>
+		<div class="col-sm-4 t bg-light text-dark ml-4" style="border:1px solid black;">
+				<h3> Body TF-IDF</h3><div id="b_load" class="spinner-border text-success"style="display:none"></div>
+				<div class="scroll" id="b_tfidf" style="display:none">{{ result[2].sort_values(by=['Weight'], ascending=False).to_html(index=False,border=0, justify='center', classes="table") | safe }}</div>
+		</div>
+
+
 	</div>
+
+
+
+
+	<div class="row m-3" style="height: 340px">
+		<div class="col-sm-4 " style="border:1px solid black;">
+				<h3> Class Probabilities</h3><div id="prob_load" class="spinner-border text-success" style="display:none"></div>
+				<div id="prob" class="scroll" style="display:none"></br>{{ result[3].to_html(index=False,border=0, justify='center', classes="table table-bordered") | safe }}</div>
+
+			</div>
+
+		<div id="prob" class="col-sm-3 ml-4" style="border:1px solid black;">
+
+				</br>
+				</br>
+
+					<div class="card">
+							<div class="card-header"><h3>Stance</h3></div>
+							<div id='stance' class="card-body"><div class="spinner-border text-success" style="display:none"></div>
+							</div>
+
+					</div>
+		</div>
+
+		<div class="col-sm-4 ml-4 text-center" style="border:1px solid black;">
+				<br> <h2>Result</h2>	 <div id="result_load" class="spinner-border text-success mt-5" style="font-size:30px; display: none;"></div>
+				<div id="result" style="display:none">{% if result[0] == 'agree' or result[0] == 'discuss' %}
+					<i class="fas fa-check-circle text-success m-5" style="font-size:80px"></i> <h2>Not Fake</h2>
+
+					{% else %}
+					<i class="fa fa-times text-danger m-5" style="font-size:80px"></i> <h2>Fake News</h2>
+					{% endif %}
+				</div>
+		</div>
+	</div>
+	<div class="progress" style="height:15px">
+			<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:1%;height:15px"></div>
+		  </div>
 </div>
-	
-	
 
 
 
 
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            
-			$.ajax({
-				url: "/ajax/stance", 
-				success: function(){
-						$("#stance").html("<h3>{{ result[0].title() }}</h3>");
-				}
-			});
+            setTimeout(function() {
+				$('#h_load').hide();
+    			$('#h_tfidf').fadeIn();
+				$('#b_load').show();
+				$('.progress-bar').css("width","10%")
+			}, 2000);
+			setTimeout(function() {
+				$('#b_load').hide();
+				$('#b_tfidf').fadeIn();
+				$('#cos_load').show();
+				$('.progress-bar').css("width","20%")
+			}, 3000);
+			setTimeout(function() {
+				$('#cos_load').hide();
+				$('#cos').fadeIn();
+				$('#prob_load').show();
+				$('.progress-bar').css("width","30%")
+			}, 5000);
+			setTimeout(function() {
+				$('#prob_load').hide();
+				$('#prob').fadeIn();
+				$('#result_load').show();
+				$('.progress-bar').css("width","60%")
+			}, 10000);
+			setTimeout(function() {
+				$('#stance_load').hide();
+				$('#stance').fadeIn();
+				$('#result_load').show();
+				$("#stance").html("<h3>{{ result[0].title() }}</h3>");
+			}, 11000);
+			setTimeout(function() {
+				$('#result_load').hide();
+				$('#result').fadeIn();
+
+				$('.progress-bar').css("width","100%")
+				$('.progress-bar').fadeOut()
+			}, 12000);
 		</script>
 {% endblock %}
